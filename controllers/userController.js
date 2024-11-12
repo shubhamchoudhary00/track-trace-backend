@@ -62,6 +62,10 @@ const loginController=async(req,res)=>{
 const authController = async (req, res) => {
     
     try {
+      if(req.body.userId===null){
+        return res.status(404).send({ message: 'Not found', success: false });
+
+    }
       const user = await userModel.findOne({ _id: req.body.userId });
       if (!user) {
         return res.status(404).json({
@@ -88,6 +92,9 @@ const authController = async (req, res) => {
   const changeUserActiveStatusController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const user=await userModel.findOne({_id:id});
         if(!user){
             return res.status(404).send({success:false,message:'User does not exist'});
@@ -104,6 +111,9 @@ const authController = async (req, res) => {
   const deleteUserController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const user=await userModel.findOne({_id:id});
         if(!user){
             return res.status(404).send({success:false,message:'User does not exist'});
@@ -119,6 +129,9 @@ const authController = async (req, res) => {
   const modifyUserController=async(req,res)=>{
     try{
         const {name,email,phone,id}=req.body;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const user=await userModel.findOne({_id:id});
         if(!user){
             return res.status(404).send({success:false,message:'User does not exist'});
@@ -141,6 +154,9 @@ const authController = async (req, res) => {
       console.log(req.body);
       const { id, password, newPassword } = req.body;
   
+      if(id===null){
+        return res.status(404).send({ message: 'Not found', success: false });
+      }
       // Find user by id
       const user = await userModel.findOne({ _id: id });
       if (!user) {
@@ -176,6 +192,9 @@ const authController = async (req, res) => {
     try{
         const id=req.params.id;
         const {password}=req.body
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const user=await userModel.findOne({_id:id});
         if(!user){
             return res.status(404).send({success:false,message:'User does not exist'});
@@ -200,6 +219,9 @@ const authController = async (req, res) => {
   const getUserDetailsController=async(req,res)=>{
     try{
         const id=req.params.id;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const user=await userModel.findOne({_id:id});
         if(!user){
             return res.status(404).send({success:false,message:'User not found'});

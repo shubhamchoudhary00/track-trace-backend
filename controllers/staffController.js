@@ -54,6 +54,9 @@ const addStaffController = async (req, res) => {
 const getAllStaffController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const staffs=await userModel.find({userId:id,role:'Staff'});
         if(!staffs){
             return res.status(404).send({success:false,message:'Staff does not exist'});
@@ -72,6 +75,9 @@ const getSpecificStaffController=async(req,res)=>{
     try{
         const {id}=req.body;
         console.log(req.body)
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const staff=await userModel.find({branch:id,role:'Staff'});
         if(!staff){
             return res.status(404).send({success:false,message:'staff not found'});
@@ -86,6 +92,9 @@ const getSpecificStaffController=async(req,res)=>{
 const deleteSpecificStaffController = async (req, res) => {
     try {
       const { id } = req.body;
+      if(id===null){
+        return res.status(404).send({ message: 'Not found', success: false });
+      }
   
       // Check if the staff member exists
       const user = await userModel.findOneAndDelete({ _id: id, role: 'Staff' });
@@ -116,6 +125,9 @@ const deleteSpecificStaffController = async (req, res) => {
 const changeActiveStatusController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const staff=await userModel.findOne({_id:id});
         if(!staff){
             return res.status(404).send({success:false,message:'Staff not found'});
@@ -134,6 +146,9 @@ const changeActiveStatusController=async(req,res)=>{
 const getSingleStaffController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+          return res.status(404).send({ message: 'Not found', success: false });
+        }
         const staff=await userModel.findOne({_id:id})
         if(!staff){
             return res.status(404).send({success:false,message:'User not found'})
@@ -153,6 +168,9 @@ const updateStaffController = async (req, res) => {
   
       console.log(req.body); // Logs to help with debugging
   
+      if(id===null){
+        return res.status(404).send({ message: 'Not found', success: false });
+      }
       // Find the user by ID
       const user = await userModel.findById(id);
   
@@ -179,6 +197,7 @@ const updateStaffController = async (req, res) => {
   const getStatsController=async(req,res)=>{
     try{
         const id=req.params.id;
+        
         if(!id){
             return res.status(404).send({success:false,message:'Not found'});
         }

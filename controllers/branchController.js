@@ -70,6 +70,9 @@ const getAllBranchForUsersController = async (req, res) => {
 const getAllBranchController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+            return res.status(404).send({ message: 'Not found', success: false });
+          }
         const branches=await branchModel.find({user:id});
         if(!branches){
             return res.status(404).send({success:false,message:'No branches available'});
@@ -83,7 +86,11 @@ const getAllBranchController=async(req,res)=>{
 
 const changeBranchActiveStatusController=async(req,res)=>{
     try{
+
         const {id}=req.body;
+        if(id===null){
+            return res.status(404).send({ message: 'Not found', success: false });
+          }
         const branch=await branchModel.findOne({_id:id});
         if(!branch){
             return res.status(404).send({success:false,message:'branch not found'});
@@ -103,6 +110,9 @@ const deleteBranchController=async(req,res)=>{
     try{
         console.log(req.body)
         const id=req.params.id;
+        if(id===null){
+            return res.status(404).send({ message: 'Not found', success: false });
+          }
         const branch=await branchModel.findOneAndDelete({_id:id});
         if(!branch){
             return res.status(404).send({success:false,message:'branch not found'});
@@ -119,6 +129,9 @@ const deleteBranchController=async(req,res)=>{
 const getBranchController=async(req,res)=>{
     try{
         const {id}=req.body;
+        if(id===null){
+            return res.status(404).send({ message: 'Not found', success: false });
+          }
         const branch=await branchModel.findOne({_id:id})
         if(!branch){
             return res.status(404).send({success:false,message:'Branch not available'})
@@ -146,7 +159,9 @@ const updateBranchController = async (req, res) => {
       } = req.body.branchData;
   
       console.log(req.body); // Debugging
-  
+      if(id===null){
+        return res.status(404).send({ message: 'Not found', success: false });
+      }
       // Find the branch by ID
       const branch = await branchModel.findOne({ _id: id });
       console.log('branch',branch)
@@ -192,6 +207,9 @@ const updateBranchController = async (req, res) => {
   const getStatsController=async(req,res)=>{
     try{
         const id=req.params.id;
+        if(id===null){
+            return res.status(404).send({ message: 'Not found', success: false });
+          }
         const branches=await branchModel.find({user:id})
         return res.status(200).send({success:true,message:'success',totalBranches:branches.length});
     }catch (error) {
